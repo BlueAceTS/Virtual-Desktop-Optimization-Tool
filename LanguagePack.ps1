@@ -2,7 +2,7 @@
 # Download Language ISO, Feature on Demand (FOD) Disk 1, and Inbox Apps ISO for Windows 10 20H2
 write-host 'AIB Customization: Download Language ISO, Feature on Demand (FOD) Disk 1, and Inbox Apps ISO for Windows 10 20H2'
 $appName = 'languagePacks'
-$drive = 'D:\'
+$drive = 'C:\'
 New-Item -Path $drive -Name $appName  -ItemType Directory -ErrorAction SilentlyContinue
 $LocalPath = $drive + $appName
 Set-Location $LocalPath
@@ -71,3 +71,7 @@ Dismount-DiskImage -ImagePath $langOutputPath
 Dismount-DiskImage -ImagePath $fodOutputPath
 #Dismount-DiskImage -ImagePath $inboxAppsOutputPath
 write-host 'AIB Customization: Finished unmounting ISOs'
+
+write-host 'AIB Customization: Removing ISOs'
+Set-Location C:\
+Remove-Item $LocalPath -Force -Recurse 
