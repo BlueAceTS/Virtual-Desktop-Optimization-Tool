@@ -296,7 +296,8 @@ PROCESS {
                     {
                         $Value = $Item.PropertyValue
                     }
-
+try
+{
                     If (Test-Path -Path ("{0}" -f $Item.HivePath))
                     {
                         Write-EventLog -EventId 40 -Message "Found $($Item.HivePath) - $($Item.KeyName)" -LogName 'Virtual Desktop Optimization' -Source 'DefaultUserSettings' -EntryType Information        
@@ -326,6 +327,11 @@ PROCESS {
                             Write-EventLog -EventId 140 -Message "Failed to create new Registry Key" -LogName 'Virtual Desktop Optimization' -Source 'DefaultUserSettings' -EntryType Error
                         } 
                     }
+ }
+                        catch
+                        {
+                            Write-EventLog -EventId 140 -Message "Failed to write Registry: $($Item.KeyName) - $($_.Exception.Message)" -LogName 'Virtual Desktop Optimization' -Source 'DefaultUserSettings' -EntryType Error 
+                        }
                 }
 
                 & REG UNLOAD HKLM\VDOT_TEMP | Out-Null
