@@ -16,4 +16,4 @@ foreach ($file in $fileList) {
     Invoke-WebRequest "$baseURI/$file" -OutFile "$outputPath\$file"
 }
 
-$startFile -AcceptEULA
+Invoke-Expression "$startFile -AcceptEULA"
