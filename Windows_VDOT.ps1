@@ -33,7 +33,7 @@ Param (
 
     [ValidateSet('All','WindowsMediaPlayer','AppxPackages','ScheduledTasks','DefaultUserSettings','Autologgers','Services','NetworkOptimizations','LGPO','DiskCleanup')] 
     [String[]]
-    $Optimizations = "'WindowsMediaPlayer','AppxPackages','ScheduledTasks','DefaultUserSettings','Autologgers','Services','NetworkOptimizations'",
+    $Optimizations = "'WindowsMediaPlayer','AppxPackages','ScheduledTasks','DefaultUserSettings','Autologgers','Services'",
 
 
     [Switch]$Restart,
@@ -116,37 +116,7 @@ BEGIN {
 }
 PROCESS {
 
-    $EULA = Get-Content ..\EULA.txt
-    If (-not($AcceptEULA))
-    {
-        $Title = "Accept EULA"
-        $Message = ""
-        $yes = New-Object System.Management.Automation.Host.ChoiceDescription "&Yes"
-        $no = New-Object System.Management.Automation.Host.ChoiceDescription "&No"
-        $Options = [System.Management.Automation.Host.ChoiceDescription[]]($yes, $no)
-        $EULA
-        $Response = $host.UI.PromptForChoice($Title, $Message, $Options, 0)
-        If ($Response -eq 0)
-        {
-            Write-EventLog -LogName 'Virtual Desktop Optimization' -Source 'VDOT' -EntryType Information -EventId 1 -Message "EULA Accepted"
-        }
-        Else
-        {
-            Write-EventLog -LogName 'Virtual Desktop Optimization' -Source 'VDOT' -EntryType Warning -EventId 1 -Message "EULA Declined, exiting!"
-            Set-Location $CurrentLocation
-            $EndTime = Get-Date
-            $ScriptRunTime = New-TimeSpan -Start $StartTime -End $EndTime
-            Write-EventLog -LogName 'Virtual Desktop Optimization' -Source 'VDOT' -EntryType Information -EventId 1 -Message "VDOT Total Run Time: $($ScriptRunTime.Hours) Hours $($ScriptRunTime.Minutes) Minutes $($ScriptRunTime.Seconds) Seconds"
-            Write-Host "`n`nThank you from the Virtual Desktop Optimization Team" -ForegroundColor Cyan
-
-            continue
-        }
-    }
-    Else 
-    {
-        Write-EventLog -LogName 'Virtual Desktop Optimization' -Source 'VDOT' -EntryType Information -EventId 1 -Message "EULA Accepted by Parameter" 
-    }
-
+    
     #region Disable, then remove, Windows Media Player including payload
     If ($Optimizations -contains "WindowsMediaPlayer" -or $Optimizations -contains "All") {
         try
