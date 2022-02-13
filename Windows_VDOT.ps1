@@ -33,7 +33,7 @@ Param (
 
     [ValidateSet('All','WindowsMediaPlayer','AppxPackages','ScheduledTasks','DefaultUserSettings','Autologgers','Services','NetworkOptimizations','LGPO','DiskCleanup')] 
     [String[]]
-    $Optimizations = @('WindowsMediaPlayer','AppxPackages','ScheduledTasks','Autologgers'),
+    $Optimizations = @('WindowsMediaPlayer','AppxPackages','ScheduledTasks','DefaultUserSettings','Autologgers'),
 
 
     [Switch]$Restart,
