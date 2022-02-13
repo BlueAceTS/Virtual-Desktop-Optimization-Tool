@@ -115,7 +115,7 @@ BEGIN {
     }
 }
 PROCESS {
-
+    Write-Host "[VDI Optimize] $Optimizations"
     
     #region Disable, then remove, Windows Media Player including payload
     If ($Optimizations -contains "WindowsMediaPlayer" -or $Optimizations -contains "All") {
