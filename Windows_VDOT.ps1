@@ -252,12 +252,13 @@ PROCESS {
             If ($UserSettings.Count -gt 0)
             {
                 Write-EventLog -EventId 40 -Message "Processing Default User Settings (Registry Keys)" -LogName 'Virtual Desktop Optimization' -Source 'DefaultUserSettings' -EntryType Information
-                Write-Verbose "Processing Default User Settings (Registry Keys)"
+                Write-Host "Processing Default User Settings (Registry Keys)"
 
                 & REG LOAD HKLM\VDOT_TEMP C:\Users\Default\NTUSER.DAT | Out-Null
 
                 Foreach ($Item in $UserSettings)
                 {
+                    Write-Host "Process $($Item.HivePath) - $($Item.KeyName)"
                     If ($Item.PropertyType -eq "BINARY")
                     {
                         $Value = [byte[]]($Item.PropertyValue.Split(","))
@@ -271,7 +272,7 @@ try
                     If (Test-Path -Path ("{0}" -f $Item.HivePath))
                     {
                         Write-EventLog -EventId 40 -Message "Found $($Item.HivePath) - $($Item.KeyName)" -LogName 'Virtual Desktop Optimization' -Source 'DefaultUserSettings' -EntryType Information        
-                        Write-Verbose "Found $($Item.HivePath) - $($Item.KeyName)"
+                        Write-Host "Found $($Item.HivePath) - $($Item.KeyName)"
                         If (Get-ItemProperty -Path ("{0}" -f $Item.HivePath) -ErrorAction SilentlyContinue)
                         {
                             Write-EventLog -EventId 40 -Message "Set $($Item.HivePath) - $Value" -LogName 'Virtual Desktop Optimization' -Source 'DefaultUserSettings' -EntryType Information
@@ -300,7 +301,7 @@ try
  }
                         catch
                         {
-                            Write-EventLog -EventId 140 -Message "Failed to write Registry: $($Item.KeyName) - $($_.Exception.Message)" -LogName 'Virtual Desktop Optimization' -Source 'DefaultUserSettings' -EntryType Error 
+                            Write-Host "Failed to write Registry: $($Item.KeyName) - $($_.Exception.Message)"
                         }
                 }
 
