@@ -471,13 +471,13 @@ try
         }
 
         # NIC Advanced Properties performance settings for network biased environments
-        Write-EventLog -EventId 70 -Message "Configuring Network Adapter Buffer Size" -LogName 'Virtual Desktop Optimization' -Source 'NetworkOptimizations' -EntryType Information
-        Write-Host "[VDI Optimize] Configuring Network Adapter Buffer Size" -ForegroundColor Cyan
-        try {
-          Set-NetAdapterAdvancedProperty -DisplayName "Send Buffer Size" -DisplayValue 4MB
-        } catch {
-          Write-EventLog -EventId 70 -Message "Failed Configuring Network Adapter Buffer Size" -LogName 'Virtual Desktop Optimization' -Source 'NetworkOptimizations' -EntryType Error
-        }
+        #Write-EventLog -EventId 70 -Message "Configuring Network Adapter Buffer Size" -LogName 'Virtual Desktop Optimization' -Source 'NetworkOptimizations' -EntryType Information
+        #Write-Host "[VDI Optimize] Configuring Network Adapter Buffer Size" -ForegroundColor Cyan
+        #try {
+        #  Set-NetAdapterAdvancedProperty -DisplayName "Send Buffer Size" -DisplayValue 4MB
+        #} catch {
+        #  Write-EventLog -EventId 70 -Message "Failed Configuring Network Adapter Buffer Size" -LogName 'Virtual Desktop Optimization' -Source 'NetworkOptimizations' -EntryType Error
+        #}
         <#  NOTE:
             Note that the above setting is for a Microsoft Hyper-V VM.  You can adjust these values in your environment...
             by querying in PowerShell using Get-NetAdapterAdvancedProperty, and then adjusting values using the...
